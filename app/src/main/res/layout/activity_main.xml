@@ -26,4 +26,16 @@
         android:layout_centerHorizontal="true"
         android:hint="April 29th → 0429"/>
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="10"
+        android:text="Divine"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>
