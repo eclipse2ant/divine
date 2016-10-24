@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -36,6 +38,16 @@ public class MainActivityTest {
     public void typetext(){
         onView(withId(R.id.editText))
                 .perform(typeText("1019")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void click_test(){
+        onView(withId(R.id.editText))
+                .perform(typeText("1019"),closeSoftKeyboard());
+        onView(withId(R.id.button)).perform(click());
+        //クリックしてSubActivityの画面が表示されるか？
+        onView(withText("Excellent luck"))
+                .check(matches(isDisplayed()));
     }
 
 
