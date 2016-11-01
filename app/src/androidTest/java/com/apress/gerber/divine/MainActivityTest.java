@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.test.suitebuilder.annotation.LargeTest;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +27,10 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
+@LargeTest
 public class MainActivityTest {
+    public static final String STRING_TO_BE_TYPED = "1019";
+
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
@@ -35,19 +40,12 @@ public class MainActivityTest {
     }
 
     @Test
-    public void typetext(){
-        onView(withId(R.id.editText))
-                .perform(typeText("1019")).check(matches(isDisplayed()));
-    }
-
-    @Test
     public void click_test(){
         onView(withId(R.id.editText))
-                .perform(typeText("1019"),closeSoftKeyboard());
-        onView(withId(R.id.button)).perform(click());
-        //クリックしてSubActivityの画面が表示されるか？
-        onView(withText("Excellent luck"))
-                .check(matches(isDisplayed()));
+                .perform(typeText(STRING_TO_BE_TYPED),closeSoftKeyboard());
+        onView(withId(R.id.changeTextBtn)).perform(click());
+        onView(withId(R.id.sub_birthday))
+                .check(matches(withText(STRING_TO_BE_TYPED)));
     }
 
 
