@@ -13,16 +13,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Input your birthday!" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:id="@+id/changeTextBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignTop="@+id/editText"
-        android:layout_alignEnd="@+id/activityChangeTextBtn" />
+        android:text="誕生日を入力"/>
 
     <Button
         android:id="@+id/activityChangeTextBtn"
@@ -31,7 +22,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_weight="10"
-        android:text="Divine"
+        android:text="占う"
+        android:layout_marginTop="27dp"
         android:layout_below="@+id/editText"
         android:layout_centerHorizontal="true" />
 
@@ -43,9 +35,9 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:hint="April 29th → 0429"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="21dp"
         android:layout_below="@+id/textView"
-        android:layout_alignEnd="@+id/changeTextBtn" />
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

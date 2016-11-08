@@ -36,14 +36,14 @@ public class MainActivityTest {
 
     @Test
     public void listsGoesOver() {
-        onView(withText("Input your birthday!")).check(matches(isDisplayed()));
+        onView(withText("誕生日を入力")).check(matches(isDisplayed()));
     }
 
     @Test
     public void click_test(){
         onView(withId(R.id.editText))
                 .perform(typeText(STRING_TO_BE_TYPED),closeSoftKeyboard());
-        onView(withId(R.id.changeTextBtn)).perform(click());
+        onView(withId(R.id.activityChangeTextBtn)).perform(click());
         onView(withId(R.id.sub_birthday))
                 .check(matches(withText(STRING_TO_BE_TYPED)));
     }
