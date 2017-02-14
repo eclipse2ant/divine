@@ -1,39 +1,116 @@
 package com.apress.gerber.divine;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.Random;
+import java.util.Calendar;
+
 
 public class MainActivity extends AppCompatActivity {
+
+
+    private EditText mEditText;
+    private TextView pDisplayDate;
+    private Button pPickDate;
+    private int pYear;
+    private int pMonth;
+    private int pDay;
+    /** This integer will uniquely define the dialog to be used for displaying date picker.*/
+    static final int DATE_DIALOG_ID = 0;
+
+    private DatePickerDialog.OnDateSetListener pDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    pYear = year;
+                    pMonth = monthOfYear;
+                    pDay = dayOfMonth;
+                    updateDisplay();
+                    displayToast();
+                }
+            };
+
+    /** Updates the date in the TextView */
+    private void updateDisplay() {
+        pDisplayDate.setText(
+                new StringBuilder()
+                        // Month is 0 based so add 1
+                        .append(pMonth + 1).append("/")
+                        .append(pDay).append("/")
+                        .append(pYear).append(" "));
+    }
+
+    /** Displays a notification when the date is updated */
+    private void displayToast() {
+        Toast.makeText(this, new StringBuilder().append("Date choosen is ").append(pDisplayDate.getText()),  Toast.LENGTH_SHORT).show();
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /** Capture our View elements */
+        pDisplayDate = (TextView) findViewById(R.id.displayDate);
+        pPickDate = (Button) findViewById(R.id.pickDate);
 
-        Button btn=(Button)findViewById(R.id.activityChangeTextBtn);
-        btn.setOnClickListener(new View.OnClickListener(){
+        /** Listener for click event of the button */
+        pPickDate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showDialog(DATE_DIALOG_ID);
+            }
+        });
+
+        /** Get the current date */
+        final Calendar cal = Calendar.getInstance();
+        pYear = cal.get(Calendar.YEAR);
+        pMonth = cal.get(Calendar.MONTH);
+        pDay = cal.get(Calendar.DAY_OF_MONTH);
+
+        /** Display the current date in the TextView */
+        updateDisplay();
+
+
+        Button btn = (Button) findViewById(R.id.activityChangeTextBtn);
+        btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,SubActivity.class);
-                
-                EditText editText = (EditText)findViewById(R.id.editText);
+                Intent intent = new Intent(MainActivity.this, SubActivity.class);
 
-                intent.putExtra("MAIN_INPUT_STRING", editText.getText().toString());
+
+
+                mEditText = (EditText) findViewById(R.id.editText_name);
+
+                intent.putExtra("Text", mEditText.getText().toString());
                 startActivity(intent);
             }
         });
+
+
     }
-
-
-
+    /** Create a new dialog for date picker */
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_DIALOG_ID:
+                return new DatePickerDialog(this,
+                        pDateSetListener,
+                        pYear, pMonth, pDay);
+        }
+        return null;
+    }
 }
 

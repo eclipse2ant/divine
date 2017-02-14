@@ -1,11 +1,16 @@
 package com.apress.gerber.divine;
 
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,22 +36,36 @@ import static org.junit.Assert.*;
 public class MainActivityTest {
     public static final String STRING_TO_BE_TYPED = "1019";
 
+
+
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
     @Test
     public void listsGoesOver() {
         onView(withText("誕生日を入力")).check(matches(isDisplayed()));
+
+
     }
 
     @Test
-    public void click_test(){
-        onView(withId(R.id.editText))
-                .perform(typeText(STRING_TO_BE_TYPED),closeSoftKeyboard());
-        onView(withId(R.id.activityChangeTextBtn)).perform(click());
-        onView(withId(R.id.sub_birthday))
-                .check(matches(withText(STRING_TO_BE_TYPED)));
+    public  void activityResult(){
+        Intent resultData = new Intent();
+        String inputbirthday ="1019";
+        resultData.putExtra("birthday",inputbirthday);
+        Instrumentation.ActivityResult result
+                = new Instrumentation.ActivityResult(Activity.RESULT_OK,resultData);
+
+
     }
+//    @Test @Ignore
+  //  public void click_test(){
+     //   onView(withId(R.id.editText_birthday))
+       //         .perform(typeText(STRING_TO_BE_TYPED),closeSoftKeyboard());
+    //    onView(withId(R.id.activityChangeTextBtn)).perform(click());
+      //  onView(withId(R.id.textName))
+        //        .check(matches(withText(STRING_TO_BE_TYPED)));
+    //}
 
 
 }

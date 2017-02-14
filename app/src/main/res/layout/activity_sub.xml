@@ -5,26 +5,19 @@
     android:weightSum="1">
 
     <TextView
-        android:id="@+id/sub_birthday"
-        android:layout_width="117dp"
+        android:id="@+id/textName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.04"
         android:textSize="20sp"/>
 
 
     <TextView
-        android:text="今日の運勢は・・・"
-        android:layout_height="27dp"
-        android:layout_width="245dp"
-        />
-
-    <TextView
         android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Excellent luck!"
+
         android:textSize="30sp"
-        android:textColor="#FF0000"
 
         />
 
