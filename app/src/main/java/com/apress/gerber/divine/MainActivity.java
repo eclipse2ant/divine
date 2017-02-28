@@ -2,7 +2,11 @@ package com.apress.gerber.divine;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import static com.apress.gerber.divine.DatabaseHelper.DB_DATE;
+//import static com.apress.gerber.divine.DatabaseHelper.DB_NAME;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private int pYear;
     private int pMonth;
     private int pDay;
+    private  long mStartTimeMillis;
+    private DatabaseHelper mDbHelper;
     /** This integer will uniquely define the dialog to be used for displaying date picker.*/
     static final int DATE_DIALOG_ID = 0;
 
@@ -90,16 +100,36 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SubActivity.class);
 
-
-
                 mEditText = (EditText) findViewById(R.id.editText_name);
 
                 intent.putExtra("Text", mEditText.getText().toString());
                 startActivity(intent);
             }
         });
+    }
 
+    public void saveJogViaSTP(){
 
+        String strDate = new SimpleDateFormat("yyyy/MM/dd").format(mStartTimeMillis);
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.DB_DATE, strDate);
+
+    }
+
+    public void saveJog(){
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        String strDate = new SimpleDateFormat("yyyy/MM/dd").format(mStartTimeMillis);
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.DB_DATE,strDate);
+        try{
+            db.insert(DatabaseHelper.TABLE_JOGRECORD, null, values);
+        }catch (Exception e){
+            Toast.makeText(this,"データの保存に失敗しました", Toast.LENGTH_SHORT).show();
+        }finally {
+            db.close();
+        }
     }
     /** Create a new dialog for date picker */
     @Override
